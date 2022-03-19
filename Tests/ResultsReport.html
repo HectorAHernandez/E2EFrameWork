@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>Test Report</title>
+    <link href="assets/style.css" rel="stylesheet" type="text/css"/></head>
+  <body onLoad="init()">
+    <script>/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this file,
+ * You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+
+function toArray(iter) {
+    if (iter === null) {
+        return null;
+    }
+    return Array.prototype.slice.call(iter);
+}
+
+function find(selector, elem) { // eslint-disable-line no-redeclare
+    if (!elem) {
+        elem = document;
+    }
+    return elem.querySelector(selector);
+}
+
+function findAll(selector, elem) {
+    if (!elem) {
+        elem = document;
+    }
+    return toArray(elem.querySelectorAll(selector));
+}
+
+function sortColumn(elem) {
+    toggleSortStates(elem);
+    const colIndex = toArray(elem.parentNode.childNodes).indexOf(elem);
+    let key;
+    if (elem.classList.contains('result')) {
+        key = keyResult;
+    } else if (elem.classList.contains('links')) {
+        key = keyLink;
+    } else {
+        key = keyAlpha;
+    }
+    sortTable(elem, key(colIndex));
+}
+
+function showAllExtras() { // eslint-disable-line no-unused-vars
+    findAll('.col-result').forEach(showExtras);
+}
+
+function hideAllExtras() { // eslint-disable-line no-unused-vars
+    findAll('.col-result').forEach(hideExtras);
+}
+
+function showExtras(colresultElem) {
+    const extras = colresultElem.parentNode.nextElementSibling;
+    const expandcollapse = colresultElem.firstElementChild;
+    extras.classList.remove('collapsed');
+    expandcollapse.classList.remove('expander');
+    expandcollapse.classList.add('collapser');
+}
+
+function hideExtras(colresultElem) {
+    const extras = colresultElem.parentNode.nextElementSibling;
+    const expandcollapse = colresultElem.firstElementChild;
+    extras.classList.add('collapsed');
+    expandcollapse.classList.remove('collapser');
+    expandcollapse.classList.add('expander');
+}
+
+function showFilters() {
+    const filterItems = document.getElementsByClassName('filter');
+    for (let i = 0; i < filterItems.length; i++)
+        filterItems[i].hidden = false;
+}
+
+function addCollapse() {
+    // Add links for show/hide all
+    const resulttable = find('table#results-table');
+    const showhideall = document.createElement('p');
+    showhideall.innerHTML = '<a href="javascript:showAllExtras()">Show all details</a> / ' +
+                            '<a href="javascript:hideAllExtras()">Hide all details</a>';
+    resulttable.parentElement.insertBefore(showhideall, resulttable);
+
+    // Add show/hide link to each result
+    findAll('.col-result').forEach(function(elem) {
+        const collapsed = getQueryParameter('collapsed') || 'Passed';
+        const extras = elem.parentNode.nextElementSibling;
+        const expandcollapse = document.createElement('span');
+        if (extras.classList.contains('collapsed')) {
+            expandcollapse.classList.add('expander');
+        } else if (collapsed.includes(elem.innerHTML)) {
+            extras.classList.add('collapsed');
+            expandcollapse.classList.add('expander');
+        } else {
+            expandcollapse.classList.add('collapser');
+        }
+        elem.appendChild(expandcollapse);
+
+        elem.addEventListener('click', function(event) {
+            if (event.currentTarget.parentNode.nextElementSibling.classList.contains('collapsed')) {
+                showExtras(event.currentTarget);
+            } else {
+                hideExtras(event.currentTarget);
+            }
+        });
+    });
+}
+
+function getQueryParameter(name) {
+    const match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+}
+
+function init () { // eslint-disable-line no-unused-vars
+    resetSortHeaders();
+
+    addCollapse();
+
+    showFilters();
+
+    sortColumn(find('.initial-sort'));
+
+    findAll('.sortable').forEach(function(elem) {
+        elem.addEventListener('click',
+            function() {
+                sortColumn(elem);
+            }, false);
+    });
+}
+
+function sortTable(clicked, keyFunc) {
+    const rows = findAll('.results-table-row');
+    const reversed = !clicked.classList.contains('asc');
+    const sortedRows = sort(rows, keyFunc, reversed);
+    /* Whole table is removed here because browsers acts much slower
+     * when appending existing elements.
+     */
+    const thead = document.getElementById('results-table-head');
+    document.getElementById('results-table').remove();
+    const parent = document.createElement('table');
+    parent.id = 'results-table';
+    parent.appendChild(thead);
+    sortedRows.forEach(function(elem) {
+        parent.appendChild(elem);
+    });
+    document.getElementsByTagName('BODY')[0].appendChild(parent);
+}
+
+function sort(items, keyFunc, reversed) {
+    const sortArray = items.map(function(item, i) {
+        return [keyFunc(item), i];
+    });
+
+    sortArray.sort(function(a, b) {
+        const keyA = a[0];
+        const keyB = b[0];
+
+        if (keyA == keyB) return 0;
+
+        if (reversed) {
+            return keyA < keyB ? 1 : -1;
+        } else {
+            return keyA > keyB ? 1 : -1;
+        }
+    });
+
+    return sortArray.map(function(item) {
+        const index = item[1];
+        return items[index];
+    });
+}
+
+function keyAlpha(colIndex) {
+    return function(elem) {
+        return elem.childNodes[1].childNodes[colIndex].firstChild.data.toLowerCase();
+    };
+}
+
+function keyLink(colIndex) {
+    return function(elem) {
+        const dataCell = elem.childNodes[1].childNodes[colIndex].firstChild;
+        return dataCell == null ? '' : dataCell.innerText.toLowerCase();
+    };
+}
+
+function keyResult(colIndex) {
+    return function(elem) {
+        const strings = ['Error', 'Failed', 'Rerun', 'XFailed', 'XPassed',
+            'Skipped', 'Passed'];
+        return strings.indexOf(elem.childNodes[1].childNodes[colIndex].firstChild.data);
+    };
+}
+
+function resetSortHeaders() {
+    findAll('.sort-icon').forEach(function(elem) {
+        elem.parentNode.removeChild(elem);
+    });
+    findAll('.sortable').forEach(function(elem) {
+        const icon = document.createElement('div');
+        icon.className = 'sort-icon';
+        icon.textContent = 'vvv';
+        elem.insertBefore(icon, elem.firstChild);
+        elem.classList.remove('desc', 'active');
+        elem.classList.add('asc', 'inactive');
+    });
+}
+
+function toggleSortStates(elem) {
+    //if active, toggle between asc and desc
+    if (elem.classList.contains('active')) {
+        elem.classList.toggle('asc');
+        elem.classList.toggle('desc');
+    }
+
+    //if inactive, reset all other functions and add ascending active
+    if (elem.classList.contains('inactive')) {
+        resetSortHeaders();
+        elem.classList.remove('inactive');
+        elem.classList.add('active');
+    }
+}
+
+function isAllRowsHidden(value) {
+    return value.hidden == false;
+}
+
+function filterTable(elem) { // eslint-disable-line no-unused-vars
+    const outcomeAtt = 'data-test-result';
+    const outcome = elem.getAttribute(outcomeAtt);
+    const classOutcome = outcome + ' results-table-row';
+    const outcomeRows = document.getElementsByClassName(classOutcome);
+
+    for(let i = 0; i < outcomeRows.length; i++){
+        outcomeRows[i].hidden = !elem.checked;
+    }
+
+    const rows = findAll('.results-table-row').filter(isAllRowsHidden);
+    const allRowsHidden = rows.length == 0 ? true : false;
+    const notFoundMessage = document.getElementById('not-found-message');
+    notFoundMessage.hidden = !allRowsHidden;
+}
+</script>
+    <h1>ResultsReport.html</h1>
+    <p>Report generated on 11-Oct-2021 at 14:22:31 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v3.1.1</p>
+    <h2>Environment</h2>
+    <table id="environment">
+      <tr>
+        <td>JAVA_HOME</td>
+        <td>C:\Program Files\Java\jdk1.8.0_201</td></tr>
+      <tr>
+        <td>Packages</td>
+        <td>{"pluggy": "1.0.0", "py": "1.10.0", "pytest": "6.2.5"}</td></tr>
+      <tr>
+        <td>Platform</td>
+        <td>Windows-10-10.0.19042-SP0</td></tr>
+      <tr>
+        <td>Plugins</td>
+        <td>{"html": "3.1.1", "metadata": "1.11.0"}</td></tr>
+      <tr>
+        <td>Python</td>
+        <td>3.9.6</td></tr></table>
+    <h2>Summary</h2>
+    <p>3 tests ran in 10.08 seconds. </p>
+    <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="passed">1 passed</span>, <input checked="true" class="filter" data-test-result="skipped" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="skipped">0 skipped</span>, <input checked="true" class="filter" data-test-result="failed" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="failed">2 failed</span>, <input checked="true" class="filter" data-test-result="error" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="error">0 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
+    <h2>Results</h2>
+    <table id="results-table">
+      <thead id="results-table-head">
+        <tr>
+          <th class="sortable result initial-sort" col="result">Result</th>
+          <th class="sortable" col="name">Test</th>
+          <th class="sortable" col="duration">Duration</th>
+          <th class="sortable links" col="links">Links</th></tr>
+        <tr hidden="true" id="not-found-message">
+          <th colspan="4">No results found. Try to check the filters</th></tr></thead>
+      <tbody class="failed results-table-row">
+        <tr>
+          <td class="col-result">Failed</td>
+          <td class="col-name">test_03_3_PObjProductPurchaseDataDrivenExternal.py::TestEndToEndShop::test_select_product_and_purchase[get_product_to_buy_data0]</td>
+          <td class="col-duration">7.95</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div><div><img src="test_03_3_PObjProductPurchaseDataDrivenExternal.py_TestEndToEndShop_test_select_product_and_purchase[get_product_to_buy_data0].png" alt="screenshot" style="width:304px;height:228px;" onclick="window.open(this.src)" align="right"/></div></div>
+            <div class="log">self = &lt;Tests.test_03_3_PObjProductPurchaseDataDrivenExternal.TestEndToEndShop object at 0x0000020089805AF0&gt;<br/>get_product_to_buy_data = {&#x27;deliveryCountry&#x27;: &#x27;France&#x27;, &#x27;product&#x27;: &#x27;Nokia&#x27;}<br/><br/>    def test_select_product_and_purchase(self, get_product_to_buy_data):   # setup was eleminated because with &#x27;self&#x27; we have now access to<br/>        # all the code in the parent class BaseClassUtilities, including the &#x27;setup&#x27; fixture.<br/>        # def test_select_product_and_purchase(self, setup):<br/>    <br/>        # instantiate a log object from the logger method in the BaseClassUtilities.py class. The &#x27;self.&#x27; is not needed<br/>        # in &#x27;= get_logger()&#x27; because the get_logger() method was defined as static in the BaseClassUtilities.py and<br/>        # imported in this testCase with &#x27;from utilities.BaseClassUtilities import BaseClassUtilities, get_logger&#x27;:<br/>        log = get_logger()  # Now we can use this &#x27;log&#x27; object to log what we want see below:<br/>        log.info(&quot;**** Started execution for test case: &quot;)<br/>    <br/>        log.setLevel(logging.DEBUG)  # to change the log level in the testCase instead of the log definition.<br/>    <br/>        # initialize wk_product_to_select:<br/>        wk_product_to_select = get_product_to_buy_data[&quot;product&quot;]<br/>        log.debug(&quot;-- wk_product_to_select &quot; + wk_product_to_select)<br/>    <br/>        wk_product_found = False<br/>        wk_name_product_in_sc = &quot;&quot;<br/>    <br/>        # instantiate a pageObject of the HomePage class, passing this instance driver &#x27;self.driver&#x27; object as a<br/>        # parameter to the HomePage class&#x27;s constructor method:<br/>        home_page_object = HomePage(self.driver)<br/>    <br/>        # click on the Shop link, we will use the inter-link concept implemented on the page&#x27;s classes. where<br/>        # we will use the method in the current page that click the link and at the same time instantiate and<br/>        # return the driver object for the next page (checkout_page_object) (this is inter-link):<br/>        checkout_page_object = home_page_object.get_shop_link()  # this get_shop_link() method will click on the<br/>        # link button then instantiate the object of the displayed page and return it to this testCase to continue<br/>        # the execution using all the getter and setter methods for the displayed page.<br/>    <br/>        # No need to instantiate a checkoutPage object from the CheckoutPage class, because of what explained above.<br/>        # ##   --&gt; checkout_page_object = CheckoutPage(self.driver)<br/>    <br/>        # 1: Build a list of all the products displayed:<br/>        i = -1  # create index variable to access the tuple data structure returned into products_list for<br/>        #         the checkout_page_object<br/>        products_name_list = checkout_page_object.get_product_names_list()<br/>        for product_name in products_name_list:<br/>            i = i + 1<br/>            wk_product_name_in_prod_list = product_name.text<br/>    <br/>            log.debug(&quot;current product_name_list in products list: &quot; + wk_product_name_in_prod_list)<br/>            if wk_product_to_select.upper() in wk_product_name_in_prod_list.upper():<br/>                # Add product into cart.<br/>                checkout_page_object.get_add_to_cart_buttons_list()[i].click()<br/>                #  old: productItem.find_element_by_css_selector(&quot;div button&quot;).click()<br/>                log.info(&quot;**** Added this product to the cart: &quot; + wk_product_name_in_prod_list)<br/>    <br/>                # Open the Shopping cart page by clicking the Checkout button:<br/>                checkout_page_object.get_checkout_button().click()<br/>                log.info(&quot;**** Clicked checkout button to go to the Shopping Cart&quot;)<br/>    <br/>                # create a list with all the products in the shopping cart.<br/>                products_in_shopping_cart = checkout_page_object.get_products_in_shopping_cart_list()<br/>                # above replaced: products_in_shopping_cart = self.driver.find_elements_by_xpath(&quot;//tbody/tr&quot;)<br/>    <br/>                # Loop to identify webElement/objects in the shopping cart.<br/>                for productInShoppingCart in products_in_shopping_cart:<br/>                    log.debug(&quot;-- Whole product Object In Shopping Cart List: &quot; + productInShoppingCart.text)<br/>    <br/>                    log.debug(&quot;-- Shopping Cart Product: &quot; + productInShoppingCart.find_element_by_xpath(&quot;td[1]&quot;).text)<br/>                    # in the shopping cart list, there are two lines that are not for product (total and a message)<br/>                    # both of them have the value &#x27;&amp;nbsp;&#x27; in the first &#x27;td&#x27; child tag. this value indicate<br/>                    # &quot;non braking space&quot; to the HTML; but in Selenium-Python code we treat it as single space &quot;1&quot;.<br/>                    # Therefore below &#x27;if&#x27; avoid that the error:<br/>                    # &quot;selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate<br/>                    # element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;td[1]/div[@class=&#x27;media&#x27;]/div/h4/a&quot;}&quot; in the next<br/>                    # webDriver command to be executed (line 65 or 66), because these two rows do not have the element<br/>                    # indicated there.<br/>                    if productInShoppingCart.find_element_by_xpath(&quot;td[1]&quot;).text != &quot; &quot;:  # This is the value in the<br/>                        # HTML code &quot;&amp;nbsp;&quot;, it is equal one space &quot;1&quot;.<br/>                        # identify the name of the product in the shopping cart<br/>                        wk_name_product_in_sc = checkout_page_object.get_product_in_shopping_cart_name().text<br/>                        log.debug(&quot;-- wk_name_product_in_sc: &quot; + wk_name_product_in_sc)<br/>    <br/>                        if wk_product_to_select.upper() in wk_name_product_in_sc.upper():<br/>                            assert wk_name_product_in_sc == wk_product_name_in_prod_list<br/>    <br/>                            # Get the Quantity for the product in the Shopping Cart<br/>                            wk_quantity_in_sc = checkout_page_object.get_product_in_shopping_cart_quantity().\<br/>                                get_attribute(&quot;value&quot;)<br/>                            log.debug(&quot;-- wk_quantity_in_sc &quot; + wk_quantity_in_sc)<br/>    <br/>                            # Get the Price for the product in the Shopping Cart<br/>                            wk_price_in_sc = checkout_page_object.get_product_in_shopping_cart_price().text<br/>                            wk_list = wk_price_in_sc.split(&quot;.&quot;)<br/>                            wk_price_in_sc = wk_list[1]<br/>                            log.debug(&quot;-- wk_price_in_sc: &quot; + wk_price_in_sc)<br/>    <br/>                            # Get the Total charge for the product in the Shopping Cart<br/>                            wk_total_in_sc = checkout_page_object.get_product_in_shopping_cart_total().text<br/>                            wk_list = wk_total_in_sc.split(&quot;.&quot;)<br/>                            wk_total_in_sc = wk_list[1]<br/>                            log.debug(&quot;-- wk_total_in_sc&quot; + wk_total_in_sc)<br/>    <br/>                            log.info(&quot;**** Added product product &quot; + wk_name_product_in_sc + &quot;, is in Shopping Cart &quot;<br/>                                     + &quot;With total charge of:&quot; + wk_total_in_sc)<br/>    <br/>&gt;                           assert int(wk_total_in_sc) == 2500<br/><span class="error">E                           AssertionError: assert 65000 == 2500</span><br/><span class="error">E                            +  where 65000 = int(&#x27; 65000&#x27;)</span><br/><br/>test_03_3_PObjProductPurchaseDataDrivenExternal.py:240: AssertionError<br/> -----------------------------Captured stdout setup------------------------------ <br/>Page title: ProtoCommerce
+<br/> ------------------------------Captured stderr call------------------------------ <br/>--- Logging error ---
+Traceback (most recent call last):
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\logging\__init__.py&quot;, line 1086, in emit
+    stream.write(msg + self.terminator)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\encodings\cp1252.py&quot;, line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: &#x27;charmap&#x27; codec can&#x27;t encode character &#x27;\u20b9&#x27; in position 165: character maps to &lt;undefined&gt;
+Call stack:
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\runpy.py&quot;, line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\runpy.py&quot;, line 87, in _run_code
+    exec(code, run_globals)
+  File &quot;C:\Users\ssshh\AppData\Local\Programs\Python\Python39\Scripts\py.test.exe\__main__.py&quot;, line 7, in &lt;module&gt;
+    sys.exit(console_main())
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\config\__init__.py&quot;, line 185, in console_main
+    code = main()
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\config\__init__.py&quot;, line 162, in main
+    ret: Union[ExitCode, int] = config.hook.pytest_cmdline_main(
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_hooks.py&quot;, line 265, in __call__
+    return self._hookexec(self.name, self.get_hookimpls(), kwargs, firstresult)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_manager.py&quot;, line 80, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_callers.py&quot;, line 39, in _multicall
+    res = hook_impl.function(*args)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\main.py&quot;, line 316, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\main.py&quot;, line 269, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\main.py&quot;, line 323, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_hooks.py&quot;, line 265, in __call__
+    return self._hookexec(self.name, self.get_hookimpls(), kwargs, firstresult)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_manager.py&quot;, line 80, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_callers.py&quot;, line 39, in _multicall
+    res = hook_impl.function(*args)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\main.py&quot;, line 348, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_hooks.py&quot;, line 265, in __call__
+    return self._hookexec(self.name, self.get_hookimpls(), kwargs, firstresult)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_manager.py&quot;, line 80, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_callers.py&quot;, line 39, in _multicall
+    res = hook_impl.function(*args)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\runner.py&quot;, line 109, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\runner.py&quot;, line 126, in runtestprotocol
+    reports.append(call_and_report(item, &quot;call&quot;, log))
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\runner.py&quot;, line 215, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\runner.py&quot;, line 254, in call_runtest_hook
+    return CallInfo.from_call(
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\runner.py&quot;, line 311, in from_call
+    result: Optional[TResult] = func()
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\runner.py&quot;, line 255, in &lt;lambda&gt;
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_hooks.py&quot;, line 265, in __call__
+    return self._hookexec(self.name, self.get_hookimpls(), kwargs, firstresult)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_manager.py&quot;, line 80, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_callers.py&quot;, line 39, in _multicall
+    res = hook_impl.function(*args)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\runner.py&quot;, line 162, in pytest_runtest_call
+    item.runtest()
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\python.py&quot;, line 1641, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_hooks.py&quot;, line 265, in __call__
+    return self._hookexec(self.name, self.get_hookimpls(), kwargs, firstresult)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_manager.py&quot;, line 80, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_callers.py&quot;, line 39, in _multicall
+    res = hook_impl.function(*args)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\python.py&quot;, line 183, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File &quot;C:\Users\ssshh\PycharmProjects\E2EFrameWork\Tests\test_03_3_PObjProductPurchaseDataDrivenExternal.py&quot;, line 200, in test_select_product_and_purchase
+    log.debug(&quot;-- Whole product Object In Shopping Cart List: &quot; + productInShoppingCart.text)
+Message: &#x27;-- Whole product Object In Shopping Cart List: Nokia Edge\nby Sim cart\nStatus: In Stock\n₹. 65000 ₹. 65000 Remove&#x27;
+Arguments: ()
+<br/> -------------------------------Captured log call-------------------------------- <br/>INFO     test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:150 **** Started execution for test case: 
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:156 -- wk_product_to_select Nokia
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:183 current product_name_list in products list: iphone X
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:183 current product_name_list in products list: Samsung Note 8
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:183 current product_name_list in products list: Nokia Edge
+INFO     test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:188 **** Added this product to the cart: Nokia Edge
+INFO     test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:192 **** Clicked checkout button to go to the Shopping Cart
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:200 -- Whole product Object In Shopping Cart List: Nokia Edge
+by Sim cart
+Status: In Stock
+₹. 65000 ₹. 65000 Remove
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:202 -- Shopping Cart Product: Nokia Edge
+by Sim cart
+Status: In Stock
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:215 -- wk_name_product_in_sc: Nokia Edge
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:223 -- wk_quantity_in_sc 1
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:229 -- wk_price_in_sc:  65000
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:235 -- wk_total_in_sc 65000
+INFO     test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:237 **** Added product product Nokia Edge, is in Shopping Cart With total charge of: 65000<br/></div></td></tr></tbody>
+      <tbody class="failed results-table-row">
+        <tr>
+          <td class="col-result">Failed</td>
+          <td class="col-name">test_03_3_PObjProductPurchaseDataDrivenExternal.py::TestEndToEndShop::test_select_product_and_purchase[get_product_to_buy_data1]</td>
+          <td class="col-duration">0.82</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div><div><img src="test_03_3_PObjProductPurchaseDataDrivenExternal.py_TestEndToEndShop_test_select_product_and_purchase[get_product_to_buy_data1].png" alt="screenshot" style="width:304px;height:228px;" onclick="window.open(this.src)" align="right"/></div></div>
+            <div class="log">self = &lt;Tests.test_03_3_PObjProductPurchaseDataDrivenExternal.TestEndToEndShop object at 0x0000020089955C40&gt;<br/>get_product_to_buy_data = {&#x27;deliveryCountry&#x27;: &#x27;India&#x27;, &#x27;product&#x27;: &#x27;Blackberry&#x27;}<br/><br/>    def test_select_product_and_purchase(self, get_product_to_buy_data):   # setup was eleminated because with &#x27;self&#x27; we have now access to<br/>        # all the code in the parent class BaseClassUtilities, including the &#x27;setup&#x27; fixture.<br/>        # def test_select_product_and_purchase(self, setup):<br/>    <br/>        # instantiate a log object from the logger method in the BaseClassUtilities.py class. The &#x27;self.&#x27; is not needed<br/>        # in &#x27;= get_logger()&#x27; because the get_logger() method was defined as static in the BaseClassUtilities.py and<br/>        # imported in this testCase with &#x27;from utilities.BaseClassUtilities import BaseClassUtilities, get_logger&#x27;:<br/>        log = get_logger()  # Now we can use this &#x27;log&#x27; object to log what we want see below:<br/>        log.info(&quot;**** Started execution for test case: &quot;)<br/>    <br/>        log.setLevel(logging.DEBUG)  # to change the log level in the testCase instead of the log definition.<br/>    <br/>        # initialize wk_product_to_select:<br/>        wk_product_to_select = get_product_to_buy_data[&quot;product&quot;]<br/>        log.debug(&quot;-- wk_product_to_select &quot; + wk_product_to_select)<br/>    <br/>        wk_product_found = False<br/>        wk_name_product_in_sc = &quot;&quot;<br/>    <br/>        # instantiate a pageObject of the HomePage class, passing this instance driver &#x27;self.driver&#x27; object as a<br/>        # parameter to the HomePage class&#x27;s constructor method:<br/>        home_page_object = HomePage(self.driver)<br/>    <br/>        # click on the Shop link, we will use the inter-link concept implemented on the page&#x27;s classes. where<br/>        # we will use the method in the current page that click the link and at the same time instantiate and<br/>        # return the driver object for the next page (checkout_page_object) (this is inter-link):<br/>        checkout_page_object = home_page_object.get_shop_link()  # this get_shop_link() method will click on the<br/>        # link button then instantiate the object of the displayed page and return it to this testCase to continue<br/>        # the execution using all the getter and setter methods for the displayed page.<br/>    <br/>        # No need to instantiate a checkoutPage object from the CheckoutPage class, because of what explained above.<br/>        # ##   --&gt; checkout_page_object = CheckoutPage(self.driver)<br/>    <br/>        # 1: Build a list of all the products displayed:<br/>        i = -1  # create index variable to access the tuple data structure returned into products_list for<br/>        #         the checkout_page_object<br/>        products_name_list = checkout_page_object.get_product_names_list()<br/>        for product_name in products_name_list:<br/>            i = i + 1<br/>            wk_product_name_in_prod_list = product_name.text<br/>    <br/>            log.debug(&quot;current product_name_list in products list: &quot; + wk_product_name_in_prod_list)<br/>            if wk_product_to_select.upper() in wk_product_name_in_prod_list.upper():<br/>                # Add product into cart.<br/>                checkout_page_object.get_add_to_cart_buttons_list()[i].click()<br/>                #  old: productItem.find_element_by_css_selector(&quot;div button&quot;).click()<br/>                log.info(&quot;**** Added this product to the cart: &quot; + wk_product_name_in_prod_list)<br/>    <br/>                # Open the Shopping cart page by clicking the Checkout button:<br/>                checkout_page_object.get_checkout_button().click()<br/>                log.info(&quot;**** Clicked checkout button to go to the Shopping Cart&quot;)<br/>    <br/>                # create a list with all the products in the shopping cart.<br/>                products_in_shopping_cart = checkout_page_object.get_products_in_shopping_cart_list()<br/>                # above replaced: products_in_shopping_cart = self.driver.find_elements_by_xpath(&quot;//tbody/tr&quot;)<br/>    <br/>                # Loop to identify webElement/objects in the shopping cart.<br/>                for productInShoppingCart in products_in_shopping_cart:<br/>                    log.debug(&quot;-- Whole product Object In Shopping Cart List: &quot; + productInShoppingCart.text)<br/>    <br/>                    log.debug(&quot;-- Shopping Cart Product: &quot; + productInShoppingCart.find_element_by_xpath(&quot;td[1]&quot;).text)<br/>                    # in the shopping cart list, there are two lines that are not for product (total and a message)<br/>                    # both of them have the value &#x27;&amp;nbsp;&#x27; in the first &#x27;td&#x27; child tag. this value indicate<br/>                    # &quot;non braking space&quot; to the HTML; but in Selenium-Python code we treat it as single space &quot;1&quot;.<br/>                    # Therefore below &#x27;if&#x27; avoid that the error:<br/>                    # &quot;selenium.common.exceptions.NoSuchElementException: Message: no such element: Unable to locate<br/>                    # element: {&quot;method&quot;:&quot;xpath&quot;,&quot;selector&quot;:&quot;td[1]/div[@class=&#x27;media&#x27;]/div/h4/a&quot;}&quot; in the next<br/>                    # webDriver command to be executed (line 65 or 66), because these two rows do not have the element<br/>                    # indicated there.<br/>                    if productInShoppingCart.find_element_by_xpath(&quot;td[1]&quot;).text != &quot; &quot;:  # This is the value in the<br/>                        # HTML code &quot;&amp;nbsp;&quot;, it is equal one space &quot;1&quot;.<br/>                        # identify the name of the product in the shopping cart<br/>                        wk_name_product_in_sc = checkout_page_object.get_product_in_shopping_cart_name().text<br/>                        log.debug(&quot;-- wk_name_product_in_sc: &quot; + wk_name_product_in_sc)<br/>    <br/>                        if wk_product_to_select.upper() in wk_name_product_in_sc.upper():<br/>                            assert wk_name_product_in_sc == wk_product_name_in_prod_list<br/>    <br/>                            # Get the Quantity for the product in the Shopping Cart<br/>                            wk_quantity_in_sc = checkout_page_object.get_product_in_shopping_cart_quantity().\<br/>                                get_attribute(&quot;value&quot;)<br/>                            log.debug(&quot;-- wk_quantity_in_sc &quot; + wk_quantity_in_sc)<br/>    <br/>                            # Get the Price for the product in the Shopping Cart<br/>                            wk_price_in_sc = checkout_page_object.get_product_in_shopping_cart_price().text<br/>                            wk_list = wk_price_in_sc.split(&quot;.&quot;)<br/>                            wk_price_in_sc = wk_list[1]<br/>                            log.debug(&quot;-- wk_price_in_sc: &quot; + wk_price_in_sc)<br/>    <br/>                            # Get the Total charge for the product in the Shopping Cart<br/>                            wk_total_in_sc = checkout_page_object.get_product_in_shopping_cart_total().text<br/>                            wk_list = wk_total_in_sc.split(&quot;.&quot;)<br/>                            wk_total_in_sc = wk_list[1]<br/>                            log.debug(&quot;-- wk_total_in_sc&quot; + wk_total_in_sc)<br/>    <br/>                            log.info(&quot;**** Added product product &quot; + wk_name_product_in_sc + &quot;, is in Shopping Cart &quot;<br/>                                     + &quot;With total charge of:&quot; + wk_total_in_sc)<br/>    <br/>&gt;                           assert int(wk_total_in_sc) == 2500<br/><span class="error">E                           AssertionError: assert 50000 == 2500</span><br/><span class="error">E                            +  where 50000 = int(&#x27; 50000&#x27;)</span><br/><br/>test_03_3_PObjProductPurchaseDataDrivenExternal.py:240: AssertionError<br/> ------------------------------Captured stderr call------------------------------ <br/>--- Logging error ---
+Traceback (most recent call last):
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\logging\__init__.py&quot;, line 1086, in emit
+    stream.write(msg + self.terminator)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\encodings\cp1252.py&quot;, line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+UnicodeEncodeError: &#x27;charmap&#x27; codec can&#x27;t encode character &#x27;\u20b9&#x27; in position 165: character maps to &lt;undefined&gt;
+Call stack:
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\runpy.py&quot;, line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\runpy.py&quot;, line 87, in _run_code
+    exec(code, run_globals)
+  File &quot;C:\Users\ssshh\AppData\Local\Programs\Python\Python39\Scripts\py.test.exe\__main__.py&quot;, line 7, in &lt;module&gt;
+    sys.exit(console_main())
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\config\__init__.py&quot;, line 185, in console_main
+    code = main()
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\config\__init__.py&quot;, line 162, in main
+    ret: Union[ExitCode, int] = config.hook.pytest_cmdline_main(
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_hooks.py&quot;, line 265, in __call__
+    return self._hookexec(self.name, self.get_hookimpls(), kwargs, firstresult)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_manager.py&quot;, line 80, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_callers.py&quot;, line 39, in _multicall
+    res = hook_impl.function(*args)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\main.py&quot;, line 316, in pytest_cmdline_main
+    return wrap_session(config, _main)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\main.py&quot;, line 269, in wrap_session
+    session.exitstatus = doit(config, session) or 0
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\main.py&quot;, line 323, in _main
+    config.hook.pytest_runtestloop(session=session)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_hooks.py&quot;, line 265, in __call__
+    return self._hookexec(self.name, self.get_hookimpls(), kwargs, firstresult)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_manager.py&quot;, line 80, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_callers.py&quot;, line 39, in _multicall
+    res = hook_impl.function(*args)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\main.py&quot;, line 348, in pytest_runtestloop
+    item.config.hook.pytest_runtest_protocol(item=item, nextitem=nextitem)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_hooks.py&quot;, line 265, in __call__
+    return self._hookexec(self.name, self.get_hookimpls(), kwargs, firstresult)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_manager.py&quot;, line 80, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_callers.py&quot;, line 39, in _multicall
+    res = hook_impl.function(*args)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\runner.py&quot;, line 109, in pytest_runtest_protocol
+    runtestprotocol(item, nextitem=nextitem)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\runner.py&quot;, line 126, in runtestprotocol
+    reports.append(call_and_report(item, &quot;call&quot;, log))
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\runner.py&quot;, line 215, in call_and_report
+    call = call_runtest_hook(item, when, **kwds)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\runner.py&quot;, line 254, in call_runtest_hook
+    return CallInfo.from_call(
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\runner.py&quot;, line 311, in from_call
+    result: Optional[TResult] = func()
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\runner.py&quot;, line 255, in &lt;lambda&gt;
+    lambda: ihook(item=item, **kwds), when=when, reraise=reraise
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_hooks.py&quot;, line 265, in __call__
+    return self._hookexec(self.name, self.get_hookimpls(), kwargs, firstresult)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_manager.py&quot;, line 80, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_callers.py&quot;, line 39, in _multicall
+    res = hook_impl.function(*args)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\runner.py&quot;, line 162, in pytest_runtest_call
+    item.runtest()
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\python.py&quot;, line 1641, in runtest
+    self.ihook.pytest_pyfunc_call(pyfuncitem=self)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_hooks.py&quot;, line 265, in __call__
+    return self._hookexec(self.name, self.get_hookimpls(), kwargs, firstresult)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_manager.py&quot;, line 80, in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\pluggy\_callers.py&quot;, line 39, in _multicall
+    res = hook_impl.function(*args)
+  File &quot;c:\users\ssshh\appdata\local\programs\python\python39\lib\site-packages\_pytest\python.py&quot;, line 183, in pytest_pyfunc_call
+    result = testfunction(**testargs)
+  File &quot;C:\Users\ssshh\PycharmProjects\E2EFrameWork\Tests\test_03_3_PObjProductPurchaseDataDrivenExternal.py&quot;, line 200, in test_select_product_and_purchase
+    log.debug(&quot;-- Whole product Object In Shopping Cart List: &quot; + productInShoppingCart.text)
+Message: &#x27;-- Whole product Object In Shopping Cart List: Blackberry\nby Sim cart\nStatus: In Stock\n₹. 50000 ₹. 50000 Remove&#x27;
+Arguments: ()
+<br/> -------------------------------Captured log call-------------------------------- <br/>INFO     test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:150 **** Started execution for test case: 
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:156 -- wk_product_to_select Blackberry
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:183 current product_name_list in products list: iphone X
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:183 current product_name_list in products list: Samsung Note 8
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:183 current product_name_list in products list: Nokia Edge
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:183 current product_name_list in products list: Blackberry
+INFO     test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:188 **** Added this product to the cart: Blackberry
+INFO     test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:192 **** Clicked checkout button to go to the Shopping Cart
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:200 -- Whole product Object In Shopping Cart List: Blackberry
+by Sim cart
+Status: In Stock
+₹. 50000 ₹. 50000 Remove
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:202 -- Shopping Cart Product: Blackberry
+by Sim cart
+Status: In Stock
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:215 -- wk_name_product_in_sc: Blackberry
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:223 -- wk_quantity_in_sc 1
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:229 -- wk_price_in_sc:  50000
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:235 -- wk_total_in_sc 50000
+INFO     test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:237 **** Added product product Blackberry, is in Shopping Cart With total charge of: 50000<br/></div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">test_03_3_PObjProductPurchaseDataDrivenExternal.py::TestEndToEndShop::test_select_product_and_purchase[get_product_to_buy_data2]</td>
+          <td class="col-duration">0.65</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log"> ------------------------------Captured stdout call------------------------------ <br/> --- Product  apple  NOT Found ---
+<br/> -------------------------------Captured log call-------------------------------- <br/>INFO     test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:150 **** Started execution for test case: 
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:156 -- wk_product_to_select apple
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:183 current product_name_list in products list: iphone X
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:183 current product_name_list in products list: Samsung Note 8
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:183 current product_name_list in products list: Nokia Edge
+DEBUG    test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:183 current product_name_list in products list: Blackberry
+INFO     test_select_product_and_purchase:test_03_3_PObjProductPurchaseDataDrivenExternal.py:307 **** This Product was NOT FOUND: apple<br/></div></td></tr></tbody></table></body></html>

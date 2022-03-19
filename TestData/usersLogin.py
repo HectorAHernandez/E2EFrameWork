@@ -1,0 +1,1 @@
+class TestLoginData : selected_users = [{'name': 'john', 'email': 'TEST.john@gmail.com', 'gender': 'Male'}, {'name': 'peter', 'email': 'TEST.peter@gmail.com', 'gender': 'Male'}, {'name': 'Ernest', 'email': 'TEST.Ernest@gmail.com', 'gender': 'Male'}, {'name': 'Hector', 'email': 'TESTHector@gmail.com', 'gender': 'Male'}]

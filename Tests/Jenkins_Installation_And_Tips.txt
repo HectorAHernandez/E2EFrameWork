@@ -1,0 +1,338 @@
+NoteL Below Jenkins instructions and tips were capture from the Java Selenium/REST Assure class. And are updated for
+this Python-Selenium class:
+
+R)    Jenkins: was downloaded from the official website: https://jenkins.io/download and downloaded the "Generic java packge (.war)" into
+       the c:\jenkins folder.
+       To start jenkins: open a CMD prompt, and go to the folder where jenkins was downloaded and enter the command:
+          "C:\Jenkins>java -jar jenkins.war -httpport=9090" ENTER key
+- Jenkins server will start running, just wait for the message "Jenkins is fully up and running"
+- To access it, go to a browser and type: http://localhost:8080 or http://locahost:9090
+New instruction to Define and execute a Jenkins project to run the Python Selenium created project using the Jenkins webPage apps:
+    + To create a new Jenkins project, Click on "New Item", select the "Free style project" and provision the name "SeleniumPythonFirstTest" and
+      click the OK button at the bottom.
+    + In the General tab, in the Description section click on the "Advance.." button to provide the "path" where our Python project
+        (or our source code) is located (C:\Users\ssshh\PycharmProjects\E2EFrameWork),
+    + Click on the option "Use Custom Workspace" and in the Directory variable provision the path:
+        "C:\Users\ssshh\PycharmProjects\E2EFrameWork",
+         Note: Let the 'Source Code Management' as 'None' because we are using the code from this indicated Directory.
+    + To provision the command to run our Python-Selenium project, go to the "Build" section of the page,
+      click it and open the "add build step" listbox
+    + Selec "Execute Windows batch command" "Execute Shell" and provision the PyTest command we used in the CMD prompt:
+        - cd to the directory containing the pyTest.py script to execute: 'cd test'
+        - write the execution command:
+            py.test test_xxx_test_name.py --html=$WORKSPACE/Reports/hectorResultwithLog.html --browser_name firefox -k Smoke
+                 where $WORKSPACE is a reference to a Jenkins environment variable for the project Path.
+                       Reports is the folder containing all the reports generated.
+            NOTE: - When running from Jenkins we do not use the ' -v and -s' flags instead we use the --html=RptName.html
+                    because we want the html report to include all 'log' generated and the screenshot if failing testCases.
+                  - --browser_name firefox/chrome/Opera... is a flag that we created to indicate on which browser we
+                      want to execute the testCase at execution time.
+       to the command will be something like:
+            py.test test_04_3_FillingFormDataDrivenList_DictionaryFromExternalDataFile.py --html=$WORKSPACE\Reports\hectorResultwithLog.html --browser_name firefox
+                #    + All pyTest programs in a pyTest package with: py.test
+                #    + Specific pyTest program with: py.test test_02AddCustomer.py
+                #    + Specific testCases in all pyTest programs in a pyTest package, we have to identify
+                #      a series of keywords (non case sensitive) in the name of each testCases and use
+                #      the parameter '-k':
+                #           py.test -k CreditCard  (all testCases with 'CreditCard' in their name)
+                #    + Specific testCases in one specific pyTest.py program in a pyTest package, we have to
+                #      identify a series of keywords (non case sensitive) in the name of each testCases and
+                #      use the parameter '-k':
+                #           py.test test_02AddCustomer.py -k creditcard
+                #     + To run certain testCases as Smoke Test or Regression we have to use 'Marks' to
+                #       identify or tag them in the pyTest program and then use these 'Marks' in the
+                #       execution command. Marks are similar to Tag (@) in Cucumber, or Groups in TestNG.
+                #       So in the pyTest program add the Marks, to each testCase, using this format:
+                #          @pytest.mark.keywordWeWantToUse.  i.e. @pytest.mark.regression, @pytest.mark.smoke01
+                #          we can mark one testCase with more than one mark:
+                #          @pytest.mark.regression
+                #          @pytest.mark.smoke01
+                #          def test_validateReceipt():
+                #               print(xxx)
+                #
+                #        And in the execution command use the parameter -m keywordWeWantToUse (-m for mark):
+                #        py.test -m regression
+                #        py.test -m smoke01
+                #     + To skip execution of the testCase we can mark it as skip and when we send execution
+                #          of all the tests marked as skip won't be executed. We have to use the mark:
+                #          @pytest.mark.skip before the 'def' for the testCase
+                #     + If we have a testCase that we know that it is failing, but we want to execute it
+                #           and not report it as failing because it creates something that is needed in others
+                #           testCases, so we can mark it with the xfail (exclude failing report):
+                #           @pytest.mark.xfail.
+
+                # 7- flags/Parameters used:
+                #     -k stands for only execute the testCases/Methods having 'keywords' in the names.
+                #     -m execute marked testCases
+
+    + Click on Save button.
+    + To run the project in Jenkins we just need to click on the "Build Now" button.
+    + To filter what @Test to execute we have to Parameterize the Jenkins project by making these changes:
+        . In the "General" tab, Description section: Check the "This project is Parameterized" checkbox.
+        . Select "Choice Parameter" as the type of parameter.
+            * provision "JenkinsBrowserName" OR "JenkinsRunType" in the Name field.
+            * provision these choices:
+                    Chrome
+                    Firefox
+                    Opera
+                    IE
+             OR
+                    Regression
+                    SmokeTest
+
+        . In the "General" tab, Build section: modify the execution command by adding the created "tag" parameter as follow:
+                    py.test test_04_3_FillingFormDataDrivenList_DictionaryFromExternalDataFile.py
+                         --html=$WORKSPACE\Reports\hectorResultwithLog.html --browser_name "%JenkinsBrowserName%"
+                         --running_environment "%JenkinsRunningEnv%"
+                         --run_type "%JenkinsRunType%"
+                    Note: the "%JenkisVariableName%" indicates that a parameter is used.
+                            For Windows environment we use %%, for Linux use only one $, like "$JenkinsVariable"
+      + NOW to run the project in Jenkins we just need to click on the "Build with Parameters" button instead of the "Build Now" button.
+
+    More to update in creating JUnit for Results report (need to adap to Python):
+            VERIFY THAT THE TESTNG PLUGIN and/or JUnit plugin (for SOAPUI) IS NOW ATTACHED TO THE Jenkins project:
+        1- Go to the Jenkins project.
+        2- On the left menu, click on "Configure" link.
+        3- Go to the "Post-Build Actions" section
+        4- click on the "Post-Build Actions" list box and select the "Publish TestNG Results" or "Publish JUnit Test Result Report" option.
+        5- Verify that:
+        - For Maven/TestNG: the field "TestNG XML report pattern" is automatically populated with the .xml file
+        in the "Target" new folder "sunfire reports": **/testng-results.xml
+        - For SOAPUI/JUnit: In the "Test Report XMLs" field provision this
+        **/TEST-AutomaationGrovvyTestSuite.xml   OR
+        **/reports/TEST-AutomaationGrovvyTestSuite.xml, **/reports/TEST-FirstTestSuite.xml  OR
+        **/reports/*.xml
+        for Python I have used: **\*.xml
+        These files are included in the folder
+          where the xml report is created.  Note from website: "* only matches any files in workspace directory/folder, if the artifacts you want to
+          archive is in some subdirectories, you need the pattern like **/*.xml to match all files in all subdirectories with postfix .xml.
+          The workspace directory/folder is:
+             - For SOAPUI testRunner: C:\Program Files\SmartBear\SoapUI-5.4.0\bin
+             - For Maven: ${JENKINS_HOME}/Maven-Selenium-app "
+
+        6- Click on Save button.
+        7- Now the TestNG Results report will be generated every time the project runs, either by "Build Now" or
+        scheduled.
+
+
+
+
+
+    Below are the notes from my original installation located in file /Maven-Selenium-app/ZZ_JenkinsInstallationAndTips in Selenium
+    project: C:\Users\ssshh\Maven-Selenium-app. Maybe some are not applicable now but saved time in rewriting new instruction from Rahul.
+
+jenkins is a very important tool for developer and testing, because it is a Continue Integration tool that
+was developed mainly for automation of the daily manual commands we issue for everything, like deploying
+the code, copying files, etc. Also, assuming we have 500 test in Eclipse, taking 7 hours to run, and instead of running then in
+Eclipse or in Maven manually, we can create a job in Jenkins to trigger automatic execution a 2:00 am.
+Jenkins only knows that have to execute some script or command, any type.
+Jenkins provide a user friendly environment to view the reports of the automated test execution. this is possible through
+having the URL of the Jenkins Project. In this Jenkins project if we want to execute the command now, we
+just have to click the "Build Now" button and to see the result they can click the result button. This
+means that having the Jenkins project URL any one can run the automated tests and see the results.
+
+Jenkins runs on it own server, so we need to set up Java and Maven to it. and based on the Java and Maven
+version that we indicate/installed Jenkins will run for that indicated version. this means, that if we
+have a TestNG version 6, but we want to execute the tests on version 5 (because it is more stable) we can
+indicate to Jenkins to use TestNG version 5. So Jenkins runs with the version of its own environment and
+this avoid the issues of different version related to the TestNG or Selenium version installed in every
+person machine. because all the test cases will always run in the version that we have provide in the
+Jenkins environment. *** It is a good practice that the business management see the testing result from
+the Jenkins environment by us sharing the Jenkins URL to our project.
+
+INSTALLING Jenkins.
+Normally in each company they will have centralized servers where they install Jenkins, so we don't have to install
+there, but if its needed we know how to because here we are installing Jenkins in our local host machine:
+1- Google: Jenkins download
+2- click on the official site download to get to here: https://jenkins.io/download/
+3- In local host, we are going to be using Jenkins as window's service, not at hosting the service, so
+we have to go down and click on "Generic Java Package (.war)" for "Long Term Support (LTS) on left
+column.
+4- For download: I have created a new c:\Jenkins folder to received the jenkins.war file
+5- Open a cmd session and move to the folder where the downloaded jenkins.war is located: cd c:\jenkins folder
+
+6- to start the jenkins server in issue: c:\jenkins> java -jar jenkins.war -httpPort=8080
+could be any free port in the machine, like 8089. Wait until this message is displayed:
+INFO: Completed initialization
+Jun 20, 2018 4:29:13 PM hudson.WebAppMain$3 run
+INFO: Jenkins is fully up and running
+
+7- follow instrutions to get the initial password 7c76c5bccfe541f0bbe4d8a11b5cbbe4 in directory:
+c:\users\ssshhh\.jenkins\secret, paste it in the pop window and click continue
+8- Select install all pluggins and click next,
+9- when finished: I have created the new userId: hectorAdmin with p a ss wrd: saibaba0
+10- in instance configuration I have selected
+Jenkins URL:  http://localhost:8080
+11- Process is completed.
+12- Open a new browser windows and user URL: http://localhost:8080/login
+13- Use userid: hectorAdmin/saibaba0
+
+14- To configure Jenkins we need these softwares: Maven and Java (Not, we dont need Selenium, TestNg..)
+Maven has an excellent integration with Jenkins, so that we can use all Maven projects in Jenkins.
+Jenkins has pluggins and commands to work with Maven, so that Jenkins can access all Maven commands
+and run then on behalf of us.
+To setup Maven and Java, click on "Manage Jenkins" link.
+15- click on the "Global tools configuration" link.
+click on Add JDK.
+provide the name: jdk1.8.0_201
+provide JAVA_HOME: C:\Program Files\Java\jdk1.8.0_171
+On Maven panel
+provide the name: Maven-3.6.3
+provide MAVEN_HOME: C:\Maven\apache-maven-3.6.3
+16- Click on Save button.
+
+CONNECTING A MAVEN PROJECT INTO JENKINS ENVIRONMENT.
+1- Copy the Maven Folder containing ALL the code for the Maven's project (Maven-Selenium-app, in c:\users\ssshh\) to the
+Jenkins directory $JENKINS_HOME (c:\users\ssshh\.jenkins. Now Jenkins has all the code of the Maven
+project in its environment and directly available for execution in Jenkins.
+Note: if I have a Postman code, I also have to copy it first to Jenkins so Jenkins can execute it.
+1.1 Copy the pom.xml and all others .xml files from Maven to this same directory
+
+2-In Jenkins main page click on "New Item" link to create a new Jenkins Job/Project.
+3- Enter the Item/Job/Project name: HectorFirstMavenProject
+4- Select the "Freestyle Projet" option and click Ok button.
+5- To provide the location of the Maven project code in Jenkins environment, In the General tab.
+5.1- Click on the "Advance.." button to show more option.
+5.2- Click on the "Use Custom Workspace" option
+5.3- In the directory box: Provide the directory of the Maven project in Jenkins, this is:
+- For Maven: ${JENKINS_HOME}/Maven-Selenium-app
+  This ${JENKINS_HOME} will execute and get the content of the JENKINS_HOME environment variable.
+- For SOAPUI indicate the "testRunner" path directory: C:\Program Files\SmartBear\SoapUI-5.4.0\bin
+
+Note-1: For companies having the code in Github or Subversion server, then we have to select the
+corresponding option in section "Source Code Management", instead of the "Advance..", so
+for execution, Jenkins download the code from these webserver (Github or Subversion).
+Because, in this case, we have not specify the use of any of this webserver, Jenkins will be
+using the "Custom Workspace" defined here.
+
+Note-2: If we want to automatically trigger the execution of this project based on some schedule,
+then we can use the section "Build Triggers" here we can use:
+- "Build Periodically" option to define the schedule we want to Job/build/project to run.
+- "Build after other projects are build" option to trigger execution of this job/build/project
+for example, after deploying a new build code to System Test then running an automatic
+Regresion or Smoke test, etc.
+6- To provide the command to execute the Maven Test project:
+6.1- Click on the Build link.
+6.2- In "Adding Steps" select:
+- For Maven: "Invoke top-level Maven Targets" option
+- For SOAPUI: "Execute Windows batch commnad"
+6.2.1 insert step to Delete any previous *.xml:
+For SOAPUI: del C:\SOAP_UI\Reports\*.xml
+
+- FOR MAVEN:
+6.3- Select the Maven version that we configured before in Global Tools.
+6.4- In the Goals enter the Maven command we want to execute: test -PRegression
+OR  test
+OR  test -PSmoke  (for execution using PROFILED test Suite for Smoke test)
+- FOR SOAPUI enter below command in the command panel:
+6.5- testrunner.bat -sAutomaationGrovvyTestSuite -cGroovyScriptTestCase -r -a -j -J -f C:\SOAP_UI\Reports -I C:\SOAP_UI\04AutomationWithGroovySOAPProject-soapui-project.xml
+        here -s is the TestSuite. (xxx or all)
+         -c is the test case. (xxx or all)
+         -r indicate generate Report
+         -j indicate generate report in JUnit format.
+         -f indicate the path of the report to be created: C:\SOAP_UI\Reports.  Note: the *.xml file created here then will be copied to folder
+                  C:\Program Files\SmartBear\SoapUI-5.4.0\bin\reports (note the folder "reports" was added by me to in order to be able to
+                  provision this **/TEST-AutomaationGrovvyTestSuite.xml in the "Test Report XMLs" field later in the configuration.
+         -I indicate continue execution if an error was found, this allows the Jenkins report graph displays the test in error.
+         - Last is the path and name of the project: C:\SOAP_UI\04AutomationWithGroovySOAPProject-soapui-project.xml
+
+6.5.1 ADDING RENAME STEP:
+In case we have more than one steps executing (see 6.5) different testCases in the same testSuite we have to rename the xml file
+in the "reports" folder adding the date-Time Stamp so that we have multiple .xml file for the same testSuite, INSERT below command:
+ren C:\SOAP_UI\Reports\TEST-FirstTestSuite.xml TEST-FirstTestSuite_%date:~-4%%date:~4,2%%date:~7,2%%time:~0,2%%time:~3,2%%time:~6,2%.xml
+
+6.6- Add another step to copy the *.xml file created in c:\SOAP_UI\Reports folder to the ....\reports folder under the workspace folder, for this:
+In "Adding Steps" select:
+- For SOAPUI: "Execute Windows batch commnad"
+
+6.7- FOR SOAPUI enter below command in the command panel:
+copy C:\SOAP_UI\Reports\*.xml "C:\Program Files\SmartBear\SoapUI-5.4.0\bin\reports" /Y
+
+7- Clik on Save buttton. And we have successfully created our first Jenkins project!!!!!
+
+To run the job/build/project from the Jenkins page:
+1- Click on the left side menu "Build Now" option
+2- The Execution is displayed in the "Build History" panel with a execution number #xxx
+3- Wen execution finishes, click on the link created to see the results.
+4- click on the "Console Output" to see the result in the console.
+
+MODIFYING THE PROJECT TO INDICATE RUNNING A DIFFERENT MAVEN COMMAND
+1- On jenkins main page, on left side menu click on "Configure" option
+2- In the Build section, update the Maven command as neeed.
+
+INTEGRATING The TestNG format Output/Result REPORT AFTER RUNNING WITH JENKINS.
+- Afte running with Jenkins, if we go to Eclipse and Refresh (PF5 Key) and opening the "Target' folder
+we will find the new folder "sunfire reports", opening it we will find the testng-results.xml file, this
+file contains all the execution result in xml format and is going to be used by Jenkins to displays
+the result in the Webbrowser format. to get this we need to configure the TestNG report plugin
+by following below steps:
+1- Install the TestNG pluggin in Jenkins:
+2- Go to the Jenkins Dashboard.
+3- In the left menu click on the "Manage Jenkins" link
+4- Click on "Manage Plugins" link
+5- Click on the "Available" tab
+6- Search/filter for/by "testng" or "JUnit" in the top righ filter
+7- check on the "TestNG Results" "JUnit Plugin" and click on the "Install without restart" button.
+Note: JUnit plugin was already installed.
+8- verify success message.
+9- click on "Go back to the top page" link.
+
+VERIFY THAT THE TESTNG PLUGIN and/or JUnit plugin (for SOAPUI) IS NOW ATTACHED TO THE Jenkins project:
+1- Go to the Jenkins project.
+2- On the left menu, click on "Configure" link.
+3- Go to the "Post-Build Actions" section
+4- click on the "Post-Build Actions" list box and select the "Publish TestNG Results" or "Publish JUnit Test Result Report" option.
+5- Verify that:
+- For Maven/TestNG: the field "TestNG XML report pattern" is automatically populated with the .xml file
+in the "Target" new folder "sunfire reports": **/testng-results.xml
+- For SOAPUI/JUnit: In the "Test Report XMLs" field provision this
+**/TEST-AutomaationGrovvyTestSuite.xml   OR
+**/reports/TEST-AutomaationGrovvyTestSuite.xml, **/reports/TEST-FirstTestSuite.xml  OR
+**/reports/*.xml
+These files are included in the folder
+  where the xml report is created.  Note from website: "* only matches any files in workspace directory/folder, if the artifacts you want to
+  archive is in some subdirectories, you need the pattern like **/*.xml to match all files in all subdirectories with postfix .xml.
+  The workspace directory/folder is:
+     - For SOAPUI testRunner: C:\Program Files\SmartBear\SoapUI-5.4.0\bin
+     - For Maven: ${JENKINS_HOME}/Maven-Selenium-app "
+
+6- Click on Save button.
+7- Now the TestNG Results report will be generated every time the project runs, either by "Build Now" or
+scheduled.
+
+SCHEDULING A JENKINS JOB/PROJECT.
+1- Being in the project, On the left side menu click on Configure
+2- Go to the "Build Trigger" section and click on "Build periodically"
+3- Use below format to populate the shedule panel: this is used to define the scheduling of a Jenkins job to run on a specific time:
+1- MINUTES - an integer number or '*' for: specific Minute in one hour (0-59)
+2- HOURS - an integer number or '*' for: specific Hour in one day (0-23)
+3- DAYMONTH - an integer number or '*' for: Specific Day in a month (1-31)
+4- MONTH - an integer number or '*' for: Specific Month in year (1-12)
+5- DAYWEEK - an integer number or '*' for: Specific Day of the week (0-7) where 0 and 7 are sunday.
+Since a few versions, Jenkins added a new parameter "H" to allow periodically scheduled tasks to
+produce an even load on the system, the symbol H (for 'hash') should be used wherever possible,
+for example using 0 0 * * * for running a 30 daily jobs will cause a large spike at midnight. In
+contrast using    H H * * * would still execute each job once a day but not all at the same time
+helping to better use of limiting resources.
+Note also that the H symbol can be thought of as a random value over a range, but it actually is
+a hash of the job name, not a random function, so that the value remains stable for any given
+project.
+Example 1: H H(3-4) * * * A job which runs every Day of the week, every Month in a year, every Day
+in a month, at a time between 3-4 am in the morning, at any minute.
+
+Example 2: H(30-45) 14 * * * A job which runs every Day of the week, every Month in a year, every Day
+in a month, at a 2 pm in the afternoon, between 30 - 45 minutes.
+
+Example 3: */5 * * * * If we want to trigger the build every 5 minutes, this will fo the job.
+Example 4: 0 8 * * *  this will trigger the build every day at 8 am, 00  minutes.
+
+4- Click on the Save button.
+
+
+S)
+
+T)
+
+U)
+
+WNWH-5CD016HSJZ

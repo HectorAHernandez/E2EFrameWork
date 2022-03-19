@@ -1,0 +1,352 @@
+1632927091426	geckodriver	INFO	Listening on 127.0.0.1:49361
+1632927094469	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofile9KgDhp"
+1632927096634	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofile9KgDhp\\search.json.mozlz4", (void 0)))
+1632927103851	Marionette	INFO	Listening on port 49369
+1632927104859	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1632927120115	Marionette	INFO	Stopped listening on port 49369
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1632927806322	geckodriver	INFO	Listening on 127.0.0.1:56978
+1632927809342	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofilesuFPgd"
+1632927810645	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofilesuFPgd\\search.json.mozlz4", (void 0)))
+1632927815325	Marionette	INFO	Listening on port 56986
+1632927815962	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1632927830883	Marionette	INFO	Stopped listening on port 56986
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1632928156204	geckodriver	INFO	Listening on 127.0.0.1:51074
+1632928159239	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofilepQ8Jyf"
+1632928160431	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofilepQ8Jyf\\search.json.mozlz4", (void 0)))
+1632928165003	Marionette	INFO	Listening on port 49584
+1632928165105	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1632928182317	Marionette	INFO	Stopped listening on port 49584
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1632928259072	geckodriver	INFO	Listening on 127.0.0.1:60621
+1632928262100	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofile9ACPom"
+1632928263981	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofile9ACPom\\search.json.mozlz4", (void 0)))
+1632928268705	Marionette	INFO	Listening on port 60629
+1632928269115	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1632928290540	Marionette	INFO	Stopped listening on port 60629
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x390076,name=PContent::Msg_DestroyBrowsingContextGroup) Closed channel: cannot send/recv
+
+1632929851341	geckodriver	INFO	Listening on 127.0.0.1:50475
+1632929854357	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofiledYurkq"
+1632929856273	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofiledYurkq\\search.json.mozlz4", (void 0)))
+1632929861456	Marionette	INFO	Listening on port 61992
+1632929861836	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1632929877143	Marionette	INFO	Stopped listening on port 61992
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1632930089483	geckodriver	INFO	Listening on 127.0.0.1:52089
+1632930092523	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileuEL0j3"
+1632930093878	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileuEL0j3\\search.json.mozlz4", (void 0)))
+1632930098449	Marionette	INFO	Listening on port 53804
+1632930098710	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1632930113677	Marionette	INFO	Stopped listening on port 53804
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1633009597179	geckodriver	INFO	Listening on 127.0.0.1:58186
+1633009600230	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofile2tDIxs"
+1633009604572	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofile2tDIxs\\search.json.mozlz4", (void 0)))
+1633009614946	Marionette	INFO	Listening on port 52622
+1633009615254	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633009625263	Marionette	WARN	TimedPromise timed out after 500 ms: stacktrace:
+TimedPromise/<@chrome://remote/content/marionette/sync.js:238:19
+TimedPromise@chrome://remote/content/marionette/sync.js:223:10
+interaction.flushEventLoop@chrome://remote/content/marionette/interaction.js:431:10
+webdriverClickElement@chrome://remote/content/marionette/interaction.js:179:31
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1633009632751	Marionette	INFO	Stopped listening on port 52622
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1633025403272	geckodriver	INFO	Listening on 127.0.0.1:63454
+1633025406286	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofiledpv90Z"
+1633025407467	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofiledpv90Z\\search.json.mozlz4", (void 0)))
+1633025412625	Marionette	INFO	Listening on port 61530
+1633025413226	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1633025428665	Marionette	INFO	Stopped listening on port 61530
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1633025484394	geckodriver	INFO	Listening on 127.0.0.1:65418
+1633025487427	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofile8j5Mvs"
+1633025488833	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofile8j5Mvs\\search.json.mozlz4", (void 0)))
+1633025493636	Marionette	INFO	Listening on port 49214
+1633025494017	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1633025508747	Marionette	INFO	Stopped listening on port 49214
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1633025602058	geckodriver	INFO	Listening on 127.0.0.1:62502
+1633025605106	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileWwQFj7"
+1633025606183	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileWwQFj7\\search.json.mozlz4", (void 0)))
+1633025610965	Marionette	INFO	Listening on port 55930
+1633025611279	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1633025626098	Marionette	INFO	Stopped listening on port 55930
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1633025726323	geckodriver	INFO	Listening on 127.0.0.1:53815
+1633025729365	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileDb48RF"
+1633025730556	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileDb48RF\\search.json.mozlz4", (void 0)))
+1633025735528	Marionette	INFO	Listening on port 49693
+1633025736071	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1633025750381	Marionette	INFO	Stopped listening on port 49693
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1633025907613	geckodriver	INFO	Listening on 127.0.0.1:52017
+1633025910666	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofile9bLeYD"
+1633025911874	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofile9bLeYD\\search.json.mozlz4", (void 0)))
+1633025916592	Marionette	INFO	Listening on port 64844
+1633025916703	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1633025931107	Marionette	INFO	Stopped listening on port 64844
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1633026085565	geckodriver	INFO	Listening on 127.0.0.1:63335
+1633026088587	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileiJPBVV"
+1633026089713	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileiJPBVV\\search.json.mozlz4", (void 0)))
+1633026094621	Marionette	INFO	Listening on port 51141
+1633026094829	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1633026109517	Marionette	INFO	Stopped listening on port 51141
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x390076,name=PContent::Msg_DestroyBrowsingContextGroup) Closed channel: cannot send/recv
+
+1633026715621	geckodriver	INFO	Listening on 127.0.0.1:59611
+1633026718642	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileVRgLXV"
+1633026719779	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileVRgLXV\\search.json.mozlz4", (void 0)))
+1633026724427	Marionette	INFO	Listening on port 57555
+1633026724656	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1633026739193	Marionette	INFO	Stopped listening on port 57555
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1633028953118	geckodriver	INFO	Listening on 127.0.0.1:49229
+1633028956177	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileECrbRM"
+1633028960477	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileECrbRM\\search.json.mozlz4", (void 0)))
+1633028970224	Marionette	INFO	Listening on port 55372
+1633028971032	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1633028986237	Marionette	INFO	Stopped listening on port 55372
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x390076,name=PContent::Msg_DestroyBrowsingContextGroup) Closed channel: cannot send/recv
+
+1633028994539	geckodriver	INFO	Listening on 127.0.0.1:61761
+1633028997630	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileHpSmrn"
+1633028998864	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileHpSmrn\\search.json.mozlz4", (void 0)))
+1633029003843	Marionette	INFO	Listening on port 54814
+1633029003984	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1633029018926	Marionette	INFO	Stopped listening on port 54814
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1633029046207	geckodriver	INFO	Listening on 127.0.0.1:54801
+1633029049201	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofilekx2zvd"
+1633029050467	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofilekx2zvd\\search.json.mozlz4", (void 0)))
+1633029055279	Marionette	INFO	Listening on port 53899
+1633029055564	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1633029070653	Marionette	INFO	Stopped listening on port 53899
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x390076,name=PContent::Msg_DestroyBrowsingContextGroup) Closed channel: cannot send/recv
+
+1633029080207	geckodriver	INFO	Listening on 127.0.0.1:50985
+1633029083235	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofilew9eRvH"
+1633029084463	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofilew9eRvH\\search.json.mozlz4", (void 0)))
+1633029089630	Marionette	INFO	Listening on port 57975
+1633029089703	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1633029104852	Marionette	INFO	Stopped listening on port 57975
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1633212314161	geckodriver	INFO	Listening on 127.0.0.1:52399
+1633212317212	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileVwCnPt"
+1633212322233	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileVwCnPt\\search.json.mozlz4", (void 0)))
+1633212335700	Marionette	INFO	Listening on port 52408
+1633212335956	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1633212351126	Marionette	INFO	Stopped listening on port 52408
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1633276936369	geckodriver	INFO	Listening on 127.0.0.1:58933
+1633276939484	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofilebk7azq"
+1633276946590	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofilebk7azq\\search.json.mozlz4", (void 0)))
+[Parent 11324, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+1633276962391	Marionette	INFO	Listening on port 64504
+1633276962702	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1633276978203	Marionette	INFO	Stopped listening on port 64504
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+[Parent 11324, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+1633277255870	geckodriver	INFO	Listening on 127.0.0.1:64278
+1633277258907	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofilejoPiOV"
+1633277260667	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofilejoPiOV\\search.json.mozlz4", (void 0)))
+1633277265727	Marionette	INFO	Listening on port 64250
+1633277265856	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1633277274254	Marionette	INFO	Stopped listening on port 64250
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+[Parent 18440, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+1633277410783	geckodriver	INFO	Listening on 127.0.0.1:60821
+1633277413826	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofile0bBM2q"
+1633277415219	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofile0bBM2q\\search.json.mozlz4", (void 0)))
+1633277420131	Marionette	INFO	Listening on port 55371
+1633277420237	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1633277433023	Marionette	INFO	Stopped listening on port 55371
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1633277509146	geckodriver	INFO	Listening on 127.0.0.1:59396
+1633277512238	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofilewaUJq9"
+1633277513506	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofilewaUJq9\\search.json.mozlz4", (void 0)))
+1633277518478	Marionette	INFO	Listening on port 56400
+1633277518668	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1633277526178	Marionette	INFO	Stopped listening on port 56400
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1633277642199	geckodriver	INFO	Listening on 127.0.0.1:49877
+1633277645262	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileN4b2rt"
+1633277646522	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileN4b2rt\\search.json.mozlz4", (void 0)))
+1633277651246	Marionette	INFO	Listening on port 62254
+1633277651661	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1633277664999	Marionette	INFO	Stopped listening on port 62254
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x390076,name=PContent::Msg_DestroyBrowsingContextGroup) Closed channel: cannot send/recv
+
+1633278375641	geckodriver	INFO	Listening on 127.0.0.1:60158
+1633278378669	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileLnwpg1"
+1633278379956	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileLnwpg1\\search.json.mozlz4", (void 0)))
+1633278385618	Marionette	INFO	Listening on port 56410
+1633278386118	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1633278400396	Marionette	INFO	Stopped listening on port 56410
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1633278829670	geckodriver	INFO	Listening on 127.0.0.1:51397
+1633278832705	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileCPIwkP"
+1633278834012	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileCPIwkP\\search.json.mozlz4", (void 0)))
+1633278838797	Marionette	INFO	Listening on port 60239
+1633278839295	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1633278852084	Marionette	INFO	Stopped listening on port 60239
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1633278857621	geckodriver	INFO	Listening on 127.0.0.1:65186
+1633278860678	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofilevbzOCi"
+1633278861760	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofilevbzOCi\\search.json.mozlz4", (void 0)))
+1633278866467	Marionette	INFO	Listening on port 60589
+1633278866651	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1633278880096	Marionette	INFO	Stopped listening on port 60589
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1633282992208	geckodriver	INFO	Listening on 127.0.0.1:57928
+1633282995241	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileRfgBWC"
+1633282996813	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileRfgBWC\\search.json.mozlz4", (void 0)))
+1633283001617	Marionette	INFO	Listening on port 57936
+1633283001789	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+JavaScript error: resource://gre/modules/XULStore.jsm, line 66: Error: Can't find profile directory.
+1633283018246	Marionette	INFO	Stopped listening on port 57936
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1633988724782	geckodriver	INFO	Listening on 127.0.0.1:52323
+1633988727841	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofiledNZaGg"
+1633988734309	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofiledNZaGg\\search.json.mozlz4", (void 0)))
+1633988749841	Marionette	INFO	Listening on port 52331
+1633988750074	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1633988766940	Marionette	INFO	Stopped listening on port 52331
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1634009198699	geckodriver	INFO	Listening on 127.0.0.1:55260
+1634009201774	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofiley0R7fy"
+1634009205013	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofiley0R7fy\\search.json.mozlz4", (void 0)))
+1634009214853	Marionette	INFO	Listening on port 53052
+1634009215928	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1634009233984	Marionette	INFO	Stopped listening on port 53052
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+1634051062456	geckodriver	INFO	Listening on 127.0.0.1:50438
+1634051065566	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofilem0IMyE"
+1634051075015	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofilem0IMyE\\search.json.mozlz4", (void 0)))
+1634051104833	Marionette	INFO	Listening on port 62689
+1634051105615	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1634051129932	Marionette	INFO	Stopped listening on port 62689
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+[Parent 17944, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+1634066533306	geckodriver	INFO	Listening on 127.0.0.1:52311
+1634066536294	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofilexcWYcY"
+1634066544009	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofilexcWYcY\\search.json.mozlz4", (void 0)))
+[Parent 8640, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
+1634066563158	Marionette	INFO	Listening on port 52323
+1634066563795	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1634066581272	Marionette	INFO	Stopped listening on port 52323
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+1634066795465	geckodriver	INFO	Listening on 127.0.0.1:53664
+1634066798502	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "-foreground" "-no-remote" "-profile" "C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileHpyiSl"
+1634066799770	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ssshh\\AppData\\Local\\Temp\\rust_mozprofileHpyiSl\\search.json.mozlz4", (void 0)))
+1634066806110	Marionette	INFO	Listening on port 59065
+1634066806554	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1634066828250	Marionette	INFO	Stopped listening on port 59065
+JavaScript error: resource:///modules/Interactions.jsm, line 209: NS_ERROR_FAILURE: Component returned failure code: 0x80004005 (NS_ERROR_FAILURE) [nsIUserIdleService.removeIdleObserver]
+[Parent 20176, IPC I/O Parent] WARNING: file /builds/worker/checkouts/gecko/ipc/chromium/src/base/process_util_win.cc:167
